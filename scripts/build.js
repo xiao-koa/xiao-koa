@@ -20,23 +20,20 @@ function removeDir(filePath) {
   }
 }
 
-removeDir('./build')
+removeDir('./lib')
 
 esbuild
   .build({
     entryPoints: ['./src/index.ts'],
     bundle: true,
-    outdir: 'build',
+    outdir: 'lib',
     platform: 'node',
     format: 'cjs',
     target: 'node14',
     plugins: [],
   })
   .then(() => {
-    // process.exec(
-    //   "npx tsc --declaration -p ./ -t es2015 --emitDeclarationOnly --outDir types",
-    //   (error, stdout, stderr) => {}
-    // );
+    process.exec('npx tsc --declaration -p ./ -t es2015 --emitDeclarationOnly --outDir types', (error, stdout, stderr) => {})
   })
   .catch((err) => {
     console.log(err)

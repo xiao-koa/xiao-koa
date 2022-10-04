@@ -1,28 +1,38 @@
 {
   "name": "xiao-koa",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./build/index.js",
+  "version": "1.0.1",
+  "description": "前端人快速开发后端服务的利器",
+  "main": "./lib/index.js",
   "files": [
-    "build"
+    "./lib/index.js"
   ],
   "scripts": {
-    "build": "node ./scripts/build.js"
+    "build:lib": "node ./scripts/build.js",
+    "prepublishOnly": "zx ./scripts/prepublish.mjs"
   },
   "keywords": [
     "xiao-koa",
     "koa",
     "xuanxiaoqian"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitee.com/xuanxiaoqian/xiao-koa"
+  },
   "author": "xuanxiaoqian",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xuanxiaoqian/xiao-koa/issues"
+  },
+  "homepage": "https://xiao-koa.xuanxiaoqian.com/",
   "devDependencies": {
     "@types/koa": "^2.13.5",
     "@types/koa-bodyparser": "^4.3.8",
     "@types/koa-router": "^7.4.4",
     "@types/node": "^18.7.18",
     "esbuild": "^0.15.7",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "zx": "^7.0.8"
   },
   "dependencies": {
     "koa": "^2.13.4",

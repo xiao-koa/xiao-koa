@@ -1,17 +1,11 @@
 <h1 align="center">Xiao Koa</h1>
 <p align="center">前端人快速开发后端服务的利器</p>
 <p align="center">
-   <a href="https://www.npmjs.com/package/qian-cli">
-    <img src="https://img.shields.io/npm/v/qian-cli.svg">
+   <a href="https://www.npmjs.com/package/xiao-koa">
+    <img src="https://img.shields.io/npm/v/xiao-koa.svg">
   </a>
-  <a href="https://npmcharts.com/compare/qian-cli?minimal=true">
-    <img src="https://img.shields.io/npm/dt/qian-cli.svg">
-  </a>
-  <a href="https://github.com/vuejs/core">
-    <img src="https://img.shields.io/badge/dependencies-vue%E2%89%A53.2.0-green">
-  </a>
-   <a href="https://github.com/vitejs/vite">
-    <img src="https://img.shields.io/badge/devDependencies-vite%E2%89%A53.0.7-green">
+  <a href="https://npmcharts.com/compare/xiao-koa?minimal=true">
+    <img src="https://img.shields.io/npm/dt/xiao-koa.svg">
   </a>
 <p align="center">
   <a href="http://xiao-koa.xuanxiaoqian.com">文档网站</a>
@@ -45,44 +39,29 @@
 
 ## 安装
 
-> node版本需要  "node": "^14.18.0 || >=16.0.0" 
-
-
-
-使用npm全局安装:
+使用npm安装:
 
 ~~~sh
-npm i qian-cli -g
-~~~
-
-<br />
-
-初始化一个`项目`:
-
-~~~sh
-qian-cli init my-project
-~~~
-
-<br />
-
-初始化远程git`模板`:
-
-~~~sh
-qian-cli init git-project <你的仓库地址> [指定分支]
-~~~
-
-<br />
-
-创建一个`模块`:
-
-~~~sh
-qian-cli create moduleName
+npm i xiao-koa
 ~~~
 
 
+
+`index.ts`案例
+
+~~~ts
+import { Application, xiaoKoaApp } from "xiao-koa";
+
+@Application
+export default class TestApplication {
+  main(app: xiaoKoaApp) {
+    app.run(__dirname, 1234);
+  }
+}
+~~~
 
 
 
 ## 疑问交流
 
-QQ群: <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=LrFpPFoHAHFikBUJQqKjViRJIY1BH250&jump_from=webapi">qian-cli(746382337)</a>
+QQ群: <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=HlKQBtl0Z6aZIrJ7LdY2XEH7-whn5Cn9&jump_from=webapi&authKey=Nyq0s9BesdTQYHlMMz854uAYhjR3VvL2QEOUUF/51rzIETlh/43E5Yr8Eg53tWE4">xiao-koa(917968816)</a>

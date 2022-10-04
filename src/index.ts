@@ -13,7 +13,7 @@ const routers = new KoaRouter()
 let router: KoaRouter
 
 routers.get('/', (ctx: any) => {
-  ctx.body = '你好'
+  ctx.body = 'Hello XiaoKoa'
 })
 
 app.use(bodyparser())

@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "outDir": "./build",
+    "outDir": "./lib",
     "rootDir": "./src",
     "diagnostics": true,
     "emitDecoratorMetadata":true,
-    "declarationDir": "./build",
+    "declarationDir": "./lib",
     "target": "es2016",
     "module": "commonjs",
     "esModuleInterop": true,
@@ -17,7 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "*": ["build/*"]
+      "*": ["lib/*"]
     },
   },
   "exclude": ["node_modules", "dist", "**/*.js", "lib"],
