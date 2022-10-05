@@ -22,7 +22,7 @@ function createRequestControllerDecorator(method: RequestMethod) {
   }
 }
 
-function createRequestParamsDecorator(paramsType: paramsType): ParameterAnnotation {
+function createRequestParamsDecorator(paramsType: paramsType) {
   return function (params: string): ParameterAnnotation {
     return function (target, propertyKey) {
       let dataParamsList = Reflect.getMetadata(Features.DataParams, target[propertyKey]) ?? []

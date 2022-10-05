@@ -3,8 +3,10 @@ import 'reflect-metadata'
 import Koa, { Middleware } from 'koa'
 import KoaRouter from 'koa-router'
 import bodyparser from 'koa-bodyparser'
+import YAML from 'yamljs'
 
 import { load, ServiceMap } from './decorator'
+import path from 'path'
 export * from './decorator'
 
 const app = new Koa()
@@ -13,7 +15,7 @@ const routers = new KoaRouter()
 let router: KoaRouter
 
 routers.get('/', (ctx: any) => {
-  ctx.body = 'Hello XiaoKoa'
+  ctx.body = '<h1>Hello XiaoKoa</h1>'
 })
 
 app.use(bodyparser())
@@ -32,13 +34,19 @@ export function Application(target: any) {
 
 export class xiaoKoaApp {
   globalPrefix = ''
+  dir: string | null = null
+  JsonStr: any = {}
 
-  run(dir: string, prot: number) {
+  run(dir: string, prot?: number) {
+    const nativeObject = YAML.load(path.join(dir, 'application.yml'))
+    this.JsonStr = JSON.parse(JSON.stringify(nativeObject))
+
+    this.dir = dir
     router = load(dir)
     app.use(router.routes())
 
-    app.listen(prot, () => {
-      console.log(`请访问 http://localhost:${prot}`)
+    app.listen(prot ?? this.JsonStr?.server?.port, () => {
+      console.log(`请访问 http://localhost:${prot ?? this.JsonStr?.server?.port}`)
     })
   }
 
@@ -47,7 +55,13 @@ export class xiaoKoaApp {
   }
 
   mount(fn: Function) {
-    fn(ServiceMap)
+    if (this.dir === null) {
+      process.nextTick(() => {
+        fn(this.dir, ServiceMap, this.JsonStr)
+      })
+    } else {
+      fn(this.dir, ServiceMap, this.JsonStr)
+    }
   }
 
   setGlobalPrefix(prefix: string) {

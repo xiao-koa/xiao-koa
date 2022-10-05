@@ -13,7 +13,6 @@
 </p>
 
 
-
 ---
 
 
@@ -58,6 +57,15 @@ export default class TestApplication {
     app.run(__dirname, 1234);
   }
 }
+~~~
+
+
+
+`application.yml`案例
+
+~~~yaml
+server:
+  port: 1234
 ~~~
 
 
