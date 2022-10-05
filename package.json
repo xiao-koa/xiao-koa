@@ -1,13 +1,15 @@
 {
   "name": "xiao-koa",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "前端人快速开发后端服务的利器",
   "main": "./lib/index.js",
   "files": [
-    "./lib/index.js"
+    "./lib"
   ],
   "scripts": {
+    "dev:docs": "vitepress dev docs",
     "build:lib": "node ./scripts/build.js",
+    "build:docs": "vitepress build docs",
     "prepublishOnly": "zx ./scripts/prepublish.mjs"
   },
   "keywords": [
@@ -17,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://gitee.com/xuanxiaoqian/xiao-koa"
+    "url": "git+https://github.com/xuanxiaoqian/xiao-koa"
   },
   "author": "xuanxiaoqian",
   "license": "ISC",
@@ -32,12 +34,11 @@
     "@types/node": "^18.7.18",
     "esbuild": "^0.15.7",
     "typescript": "^4.8.4",
-    "zx": "^7.0.8"
-  },
-  "dependencies": {
+    "zx": "^7.0.8",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^12.0.0",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "vitepress": "^1.0.0-alpha.13"
   }
 }

@@ -22,3 +22,11 @@ export enum Features {
 }
 
 export type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody'
+
+
+
+export type curInterceptorType = {
+  fn: Function
+  addPath: string[]
+  excludePath: string[]
+}

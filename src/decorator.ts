@@ -2,7 +2,7 @@ import 'reflect-metadata'
 
 import Router from 'koa-router'
 import { firstToLowerCase, getFileList } from './common'
-import { Features, FunctionAnnotation, ParameterAnnotation, Prototype, RequestMethod, paramsType } from './decoratorType'
+import { Features, FunctionAnnotation, ParameterAnnotation, Prototype, RequestMethod, paramsType, curInterceptorType } from './decoratorType'
 import { Next, ParameterizedContext } from 'koa'
 
 let router = new Router()
@@ -109,11 +109,6 @@ export function RequestMapping(url: string): FunctionAnnotation {
   }
 }
 
-type curInterceptorType = {
-  fn: Function
-  addPath: string[]
-  excludePath: string[]
-}
 class InterceptorRegistry {
   interceptorMap = new Map()
   currentFnName = ''
@@ -144,19 +139,33 @@ class InterceptorRegistry {
 }
 
 async function InterceptorProxy(ctx: any, next: Next, curRegistry: curInterceptorType) {
-  curRegistry.addPath.map(async (item) => {
-    if (ctx.request.url == item) {
-      try {
-        const config: any = curRegistry.fn
-
-        await config?.preHandle?.(ctx.request, ctx.response, next)
-      } catch (error) {
-        ctx.body = error
-      }
+  if (curRegistry.addPath.length == 0) {
+    if (curRegistry.excludePath.includes(ctx.request.url)) {
+      await next()
       return
     }
-    await next()
-  })
+
+    try {
+      const config: any = curRegistry.fn
+      await config?.preHandle?.(ctx.request, ctx.response, next)
+    } catch (error) {
+      ctx.body = error
+    }
+    return
+  }
+
+  if (curRegistry.addPath.includes(ctx.request.url)) {
+    try {
+      const config: any = curRegistry.fn
+
+      await config?.preHandle?.(ctx.request, ctx.response, next)
+    } catch (error) {
+      ctx.body = error
+    }
+    return
+  }
+
+  await next()
 }
 
 export function Configuration(target: any) {
