@@ -3,7 +3,7 @@ import { FunctionAnnotation, ParameterAnnotation } from './decoratorType';
 import { Next } from 'koa';
 export declare const ControllerMap: Map<string, Object>;
 export declare const ServiceMap: Map<string, Object>;
-export declare function RequestBody(target: any, propertyKey: any): void;
+export declare function RequestBody(target: any, propertyKey: any, paramsIndex: number): void;
 export declare function Controller(prefix: string): (target: any) => void;
 export declare function Service(alias?: string): (target: any) => void;
 export declare function Autowired(target: any, propertyKey: any): void;
@@ -21,7 +21,7 @@ export declare const RequestHeader: (params: string) => ParameterAnnotation;
 export interface HandlerInterceptor {
     preHandle(HttpServletRequest: any, HttpServletResponse: any, next: Next): any;
 }
-export default interface WebMvcConfigurer {
+export declare interface WebMvcConfigurer {
     addInterceptors(registry: registryType): void;
 }
 declare type registryType = {

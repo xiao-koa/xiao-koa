@@ -31,7 +31,7 @@ function createRequestParamsDecorator(paramsType: paramsType) {
   }
 }
 
-export function RequestBody(target: any, propertyKey: any) {
+export function RequestBody(target: any, propertyKey: any, paramsIndex: number) {
   let dataParamsList = Reflect.getMetadata(Features.DataParams, target[propertyKey]) ?? []
   Reflect.defineMetadata(Features.DataParams, [{ name: 'RequestBody', paramsType: 'RequestBody' }, ...dataParamsList], target[propertyKey])
 }
@@ -199,7 +199,7 @@ export interface HandlerInterceptor {
   preHandle(HttpServletRequest: any, HttpServletResponse: any, next: Next): any
 }
 
-export default interface WebMvcConfigurer {
+export declare interface WebMvcConfigurer {
   addInterceptors(registry: registryType): void
 }
 
