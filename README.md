@@ -7,10 +7,12 @@
   <a href="https://npmcharts.com/compare/xiao-koa?minimal=true">
     <img src="https://img.shields.io/npm/dt/xiao-koa.svg">
   </a>
+      <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
 <p align="center">
   <a href="http://xiao-koa.xuanxiaoqian.com">文档网站</a>
   &nbsp;
 </p>
+
 
 
 ---

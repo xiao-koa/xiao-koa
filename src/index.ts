@@ -7,6 +7,7 @@ import YAML from 'yamljs'
 
 import { load, ServiceMap } from './decorator'
 import path from 'path'
+import { Server } from 'http'
 export * from './decorator'
 
 const app = new Koa()
@@ -37,17 +38,21 @@ export class xiaoKoaApp {
   dir: string | null = null
   JsonStr: any = {}
 
-  run(dir: string, prot?: number) {
-    const nativeObject = YAML.load(path.join(dir, 'application.yml'))
-    this.JsonStr = JSON.parse(JSON.stringify(nativeObject))
+  run(dir: string, prot?: number): Server {
+    if (path.basename(path.join(dir, 'application.yml'))) {
+      const nativeObject = YAML.load(path.join(dir, 'application.yml'))
+      this.JsonStr = JSON.parse(JSON.stringify(nativeObject))
+    }
 
     this.dir = dir
     router = load(dir)
     app.use(router.routes())
 
-    app.listen(prot ?? this.JsonStr?.server?.port, () => {
+    const appServer = app.listen(prot ?? this.JsonStr?.server?.port, () => {
       console.log(`请访问 http://localhost:${prot ?? this.JsonStr?.server?.port}`)
     })
+
+    return appServer
   }
 
   use(fn: Middleware) {
