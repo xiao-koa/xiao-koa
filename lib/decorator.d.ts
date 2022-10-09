@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { FunctionAnnotation, ParameterAnnotation } from './decoratorType';
+export * from './decoratorType';
 export declare const ControllerMap: Map<string, Object>;
 export declare const ServiceMap: Map<string, Object>;
 export declare function RequestBody(target: any, propertyKey: any, paramsIndex: number): void;
