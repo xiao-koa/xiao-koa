@@ -1,3 +1,4 @@
+import { Next, ParameterizedContext } from "koa";
 export declare type Prototype = {
     constructor: Function;
 } & any;
@@ -24,8 +25,19 @@ export declare enum Features {
     DataParams = 1
 }
 export declare type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody';
+export interface HandlerInterceptor {
+    preHandle(ctx: ParameterizedContext, next: Next): any;
+}
+export declare interface WebMvcConfigurer {
+    addInterceptors(registry: registryType): void;
+}
+declare type registryType = {
+    addInterceptor(fn: WebMvcConfigurer): Function;
+    addPathPatterns(path: string): Function;
+};
 export declare type curInterceptorType = {
-    fn: Function;
+    fn: HandlerInterceptor;
     addPath: string[];
     excludePath: string[];
 };
+export {};

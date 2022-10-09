@@ -2,7 +2,16 @@ import 'reflect-metadata'
 
 import Router from 'koa-router'
 import { firstToLowerCase, getFileList } from './common'
-import { Features, FunctionAnnotation, ParameterAnnotation, Prototype, RequestMethod, paramsType, curInterceptorType } from './decoratorType'
+import {
+  Features,
+  FunctionAnnotation,
+  ParameterAnnotation,
+  Prototype,
+  RequestMethod,
+  paramsType,
+  curInterceptorType,
+  HandlerInterceptor,
+} from './decoratorType'
 import { Next, ParameterizedContext } from 'koa'
 
 let router = new Router()
@@ -112,7 +121,7 @@ export function RequestMapping(url: string): FunctionAnnotation {
 class InterceptorRegistry {
   interceptorMap = new Map()
   currentFnName = ''
-  addInterceptor(fn: Function) {
+  addInterceptor(fn: HandlerInterceptor) {
     this.currentFnName = fn.constructor.name
 
     let currentMeta: curInterceptorType = { fn, addPath: [], excludePath: [] }
@@ -138,7 +147,7 @@ class InterceptorRegistry {
   }
 }
 
-async function InterceptorProxy(ctx: any, next: Next, curRegistry: curInterceptorType) {
+async function InterceptorProxy(ctx: ParameterizedContext, next: Next, curRegistry: curInterceptorType) {
   if (curRegistry.addPath.length == 0) {
     if (curRegistry.excludePath.includes(ctx.request.url)) {
       await next()
@@ -147,7 +156,7 @@ async function InterceptorProxy(ctx: any, next: Next, curRegistry: curIntercepto
 
     try {
       const config: any = curRegistry.fn
-      await config?.preHandle?.(ctx.request, ctx.response, next)
+      await config?.preHandle?.(ctx, next)
     } catch (error) {
       ctx.body = error
     }
@@ -158,7 +167,7 @@ async function InterceptorProxy(ctx: any, next: Next, curRegistry: curIntercepto
     try {
       const config: any = curRegistry.fn
 
-      await config?.preHandle?.(ctx.request, ctx.response, next)
+      await config?.preHandle?.(ctx, next)
     } catch (error) {
       ctx.body = error
     }
@@ -177,7 +186,7 @@ export function Configuration(target: any) {
     const interceptorMap = interceptor.getMap()
 
     for (var key of interceptorMap.keys()) {
-      const curRegistry: any = interceptorMap.get(key)
+      const curRegistry: curInterceptorType = interceptorMap.get(key)
 
       router.use((ctx, next) => InterceptorProxy(ctx, next, curRegistry))
     }
@@ -194,19 +203,6 @@ export const Head = createRequestControllerDecorator('head')
 
 export const PathVariable = createRequestParamsDecorator('PathVariable')
 export const RequestHeader = createRequestParamsDecorator('RequestHeader')
-
-export interface HandlerInterceptor {
-  preHandle(HttpServletRequest: any, HttpServletResponse: any, next: Next): any
-}
-
-export declare interface WebMvcConfigurer {
-  addInterceptors(registry: registryType): void
-}
-
-type registryType = {
-  addInterceptor(fn: WebMvcConfigurer): Function
-  addPathPatterns(path: string): Function
-}
 
 export const load = (folder: string): any => {
   getFileList(folder, projectFile)

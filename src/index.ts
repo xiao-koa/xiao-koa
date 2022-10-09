@@ -16,12 +16,12 @@ const routers = new KoaRouter()
 
 let router: KoaRouter
 
-routers.get('/', (ctx: any) => {
+routers.get('/', (ctx) => {
   ctx.body = '<h1>Hello XiaoKoa</h1>'
 })
 
 app.use(bodyparser())
-app.use(routers.routes())
+
 
 export function Application(target: any) {
   const app = new target()
@@ -48,8 +48,9 @@ export class xiaoKoaApp {
     this.dir = dir
     router = load(dir)
     app.use(router.routes())
+    app.use(routers.routes())
 
-    const appServer = app.listen(prot ?? this.JsonStr?.server?.port, () => {
+    const appServer = app.listen(prot ?? this.JsonStr?.server?.port ?? 7777, () => {
       console.log(`请访问 http://localhost:${prot ?? this.JsonStr?.server?.port}`)
     })
 
