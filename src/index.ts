@@ -7,6 +7,7 @@ import YAML from 'yamljs'
 
 import { load, ServiceMap } from './decorator'
 import path from 'path'
+import fs from 'fs'
 import { Server } from 'http'
 export * from './decorator'
 
@@ -39,7 +40,7 @@ export class xiaoKoaApp {
   JsonStr: any = {}
 
   run(dir: string, prot?: number): Server {
-    if (path.basename(path.join(dir, 'application.yml'))) {
+    if (fs.existsSync(path.join(dir, 'application.yml'))) {
       const nativeObject = YAML.load(path.join(dir, 'application.yml'))
       this.JsonStr = JSON.parse(JSON.stringify(nativeObject))
     }
