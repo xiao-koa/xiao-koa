@@ -1,4 +1,5 @@
-import { Next, ParameterizedContext } from 'koa'
+import { Next, ParameterizedContext, DefaultState, DefaultContext } from 'koa'
+export { Next, ParameterizedContext, DefaultState, DefaultContext }
 
 export type Prototype = {
   constructor: Function
@@ -26,7 +27,7 @@ export enum Features {
 export type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody'
 
 export interface HandlerInterceptor {
-  preHandle(ctx: ParameterizedContext, next: Next): any
+  preHandle(ctx: ParameterizedContext | any, next: Next): any
 }
 
 export declare interface WebMvcConfigurer {

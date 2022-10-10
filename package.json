@@ -27,6 +27,11 @@
     "url": "https://github.com/xiao-koa/xiao-koa/issues"
   },
   "homepage": "https://xiao-koa.xuanxiaoqian.com/",
+  "dependencies": {
+    "@types/koa": "^2.13.5",
+    "@types/koa-bodyparser": "^4.3.8",
+    "@types/koa-router": "^7.4.4"
+  },
   "devDependencies": {
     "@types/node": "^18.7.18",
     "@types/yamljs": "^0.2.31",
@@ -39,10 +44,5 @@
     "vitepress": "^1.0.0-alpha.13",
     "yamljs": "^0.3.0",
     "zx": "^7.0.8"
-  },
-  "dependencies": {
-    "@types/koa": "^2.13.5",
-    "@types/koa-bodyparser": "^4.3.8",
-    "@types/koa-router": "^7.4.4"
   }
 }

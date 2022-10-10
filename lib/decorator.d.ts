@@ -1,8 +1,6 @@
 import 'reflect-metadata';
 import { FunctionAnnotation, ParameterAnnotation } from './decoratorType';
-import { Next, ParameterizedContext } from 'koa';
 export * from './decoratorType';
-export { Next, ParameterizedContext };
 export declare const ControllerMap: Map<string, Object>;
 export declare const ServiceMap: Map<string, Object>;
 export declare function RequestBody(target: any, propertyKey: any, paramsIndex: number): void;

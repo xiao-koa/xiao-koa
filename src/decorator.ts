@@ -15,7 +15,6 @@ import {
 import { Next, ParameterizedContext } from 'koa'
 
 export * from './decoratorType'
-export { Next, ParameterizedContext }
 
 let router = new Router()
 const projectFile: string[] = []
