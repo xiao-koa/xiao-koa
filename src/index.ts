@@ -22,7 +22,6 @@ routers.get('/', (ctx) => {
 
 app.use(bodyparser())
 
-
 export function Application(target: any) {
   const app = new target()
 
@@ -64,10 +63,10 @@ export class xiaoKoaApp {
   mount(fn: Function) {
     if (this.dir === null) {
       process.nextTick(() => {
-        fn(this.dir, ServiceMap, this.JsonStr)
+        fn({ dirPath: this.dir, ServiceMap, JsonStr: this.JsonStr })
       })
     } else {
-      fn(this.dir, ServiceMap, this.JsonStr)
+      fn({ dirPath: this.dir, ServiceMap, JsonStr: this.JsonStr })
     }
   }
 

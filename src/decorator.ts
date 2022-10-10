@@ -15,6 +15,7 @@ import {
 import { Next, ParameterizedContext } from 'koa'
 
 export * from './decoratorType'
+export { Next, ParameterizedContext }
 
 let router = new Router()
 const projectFile: string[] = []
@@ -26,6 +27,7 @@ function createRequestControllerDecorator(method: RequestMethod) {
   return function (url: string): FunctionAnnotation {
     return function (target, propertyKey) {
       process.nextTick(() => {
+        url = url === '/' ? '' : url
         let prefix = Reflect.getMetadata(Features.BaseUrl, ControllerMap.get(target.constructor.name) ?? {})
         router[method](prefix + url, (ctx) => ControllerProxy(ctx, target, propertyKey))
       })
