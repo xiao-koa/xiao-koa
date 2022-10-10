@@ -1,4 +1,4 @@
-import { Next, ParameterizedContext } from "koa"
+import { Next, ParameterizedContext } from 'koa'
 
 export type Prototype = {
   constructor: Function

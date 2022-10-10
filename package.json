@@ -1,6 +1,6 @@
 {
   "name": "xiao-koa",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "前端人快速开发后端服务的利器",
   "main": "./lib/index.js",
   "files": [
@@ -28,9 +28,6 @@
   },
   "homepage": "https://xiao-koa.xuanxiaoqian.com/",
   "devDependencies": {
-    "@types/koa": "^2.13.5",
-    "@types/koa-bodyparser": "^4.3.8",
-    "@types/koa-router": "^7.4.4",
     "@types/node": "^18.7.18",
     "@types/yamljs": "^0.2.31",
     "esbuild": "^0.15.7",
@@ -42,5 +39,10 @@
     "vitepress": "^1.0.0-alpha.13",
     "yamljs": "^0.3.0",
     "zx": "^7.0.8"
+  },
+  "dependencies": {
+    "@types/koa": "^2.13.5",
+    "@types/koa-bodyparser": "^4.3.8",
+    "@types/koa-router": "^7.4.4"
   }
 }
