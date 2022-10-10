@@ -24,10 +24,10 @@ export const ControllerMap: Map<string, Object> = new Map()
 export const ServiceMap: Map<string, Object> = new Map()
 
 function createRequestControllerDecorator(method: RequestMethod) {
-  return function (url: string): FunctionAnnotation {
+  return function (url?: string): FunctionAnnotation {
     return function (target, propertyKey) {
       process.nextTick(() => {
-        url = url === '/' ? '' : url
+        url = url === '/' ? '' : url ?? ''
         let prefix = Reflect.getMetadata(Features.BaseUrl, ControllerMap.get(target.constructor.name) ?? {})
         router[method](prefix + url, (ctx) => ControllerProxy(ctx, target, propertyKey))
       })
@@ -108,8 +108,8 @@ export function Autowired(target: any, propertyKey: any) {
   })
 }
 
-export function RequestMapping(url: string): FunctionAnnotation {
-  url = url === '/' ? '' : url
+export function RequestMapping(url?: string): FunctionAnnotation {
+  url = url === '/' ? '' : url ?? ''
   return function (target, propertyKey) {
     const RequestArr: RequestMethod[] = ['get', 'post', 'put', 'delete', 'options', 'patch', 'head']
     process.nextTick(() => {
