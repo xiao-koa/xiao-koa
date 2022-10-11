@@ -81,9 +81,13 @@ async function ControllerProxy(ctx: ParameterizedContext, target: Prototype, pro
   } finally {
     if (isError) return
 
-    let fnApply = await target[propertyKey].apply(target, dataArr ?? [])
+    try {
+      let fnApply = await target[propertyKey].apply(target, dataArr ?? [])
 
-    ctx.body = fnApply
+      ctx.body = fnApply
+    } catch (error) {
+      ctx.body = error
+    }
   }
 }
 

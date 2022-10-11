@@ -1,6 +1,6 @@
 {
   "name": "xiao-koa",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "前端人快速开发后端服务的利器",
   "main": "./lib/index.js",
   "files": [
