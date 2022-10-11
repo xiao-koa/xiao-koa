@@ -87,8 +87,10 @@ async function ControllerProxy(ctx: ParameterizedContext, target: Prototype, pro
   }
 }
 
-export function Controller(prefix: string) {
+export function Controller(prefix?: string) {
   return function (target: any) {
+    prefix = prefix === '/' ? '' : prefix ?? ''
+
     let currentTarget = new target()
     Reflect.defineMetadata(Features.BaseUrl, prefix, currentTarget)
 

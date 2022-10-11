@@ -4,7 +4,7 @@ export * from './decoratorType';
 export declare const ControllerMap: Map<string, Object>;
 export declare const ServiceMap: Map<string, Object>;
 export declare function RequestBody(target: any, propertyKey: any, paramsIndex: number): void;
-export declare function Controller(prefix: string): (target: any) => void;
+export declare function Controller(prefix?: string): (target: any) => void;
 export declare function Service(alias?: string): (target: any) => void;
 export declare function Autowired(target: any, propertyKey: any): void;
 export declare function RequestMapping(url?: string): FunctionAnnotation;
