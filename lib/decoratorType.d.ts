@@ -1,9 +1,9 @@
-import { Next, ParameterizedContext, DefaultState, DefaultContext } from 'koa';
-export { Next, ParameterizedContext, DefaultState, DefaultContext };
-export declare type Prototype = {
+import { DefaultContext, DefaultState, Next, ParameterizedContext } from 'koa';
+export { DefaultContext, DefaultState, Next, ParameterizedContext };
+export type Prototype = {
     constructor: Function;
 } & any;
-export declare type Constructor = {
+export type Constructor = {
     new (...args: any[]): {
         name: string;
     };
@@ -20,23 +20,23 @@ export interface PropertyAnnotation {
 export interface ParameterAnnotation {
     (target: Prototype, propertyKey: PropertyKey, parameterIndex: number): void;
 }
-export declare type RequestMethod = 'get' | 'post' | 'put' | 'delete' | 'options' | 'patch' | 'head';
+export type RequestMethod = 'get' | 'post' | 'put' | 'delete' | 'options' | 'patch' | 'head';
 export declare enum Features {
     BaseUrl = 0,
     DataParams = 1
 }
-export declare type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody';
+export type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody';
 export interface HandlerInterceptor {
     preHandle(ctx: ParameterizedContext, next: Next): any;
 }
 export declare interface WebMvcConfigurer {
     addInterceptors(registry: registryType): void;
 }
-declare type registryType = {
-    addInterceptor(fn: WebMvcConfigurer): Function;
+export type registryType = {
+    addInterceptor<T extends HandlerInterceptor>(interceptor: T): Function;
     addPathPatterns(path: string): Function;
 };
-export declare type curInterceptorType = {
+export type curInterceptorType = {
     fn: HandlerInterceptor;
     addPath: string[];
     excludePath: string[];

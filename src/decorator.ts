@@ -1,18 +1,18 @@
 import 'reflect-metadata'
 
+import { Next, ParameterizedContext } from 'koa'
 import Router from 'koa-router'
 import { firstToLowerCase, getFileList } from './common'
 import {
+  curInterceptorType,
   Features,
   FunctionAnnotation,
+  HandlerInterceptor,
   ParameterAnnotation,
+  paramsType,
   Prototype,
   RequestMethod,
-  paramsType,
-  curInterceptorType,
-  HandlerInterceptor,
 } from './decoratorType'
-import { Next, ParameterizedContext } from 'koa'
 
 export * from './decoratorType'
 

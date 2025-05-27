@@ -1,9 +1,8 @@
 #!/usr/bin/env zx
-import 'zx/globals'
+import 'zx/globals';
 
 // npm publish --access public
 
-await $`npm run build:lib`
 
 let { version } = JSON.parse(fs.readFileSync('./package.json'))
 let _data = JSON.parse(fs.readFileSync('./package.json'))

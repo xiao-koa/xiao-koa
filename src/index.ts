@@ -1,14 +1,14 @@
 import 'reflect-metadata'
 
 import Koa, { Middleware } from 'koa'
-import KoaRouter from 'koa-router'
 import bodyparser from 'koa-bodyparser'
+import KoaRouter from 'koa-router'
 import YAML from 'yamljs'
 
-import { load, ServiceMap } from './decorator'
-import path from 'path'
 import fs from 'fs'
 import { Server } from 'http'
+import path from 'path'
+import { load, ServiceMap } from './decorator'
 export * from './decorator'
 
 const app = new Koa()

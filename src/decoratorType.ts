@@ -1,10 +1,10 @@
-import { Next, ParameterizedContext, DefaultState, DefaultContext } from 'koa'
-export { Next, ParameterizedContext, DefaultState, DefaultContext }
+import { DefaultContext, DefaultState, Next, ParameterizedContext } from 'koa'
+export { DefaultContext, DefaultState, Next, ParameterizedContext }
 
 export type Prototype = {
   constructor: Function
 } & any
-export type Constructor = { new (...args: any[]): { name: string } }
+export type Constructor = { new(...args: any[]): { name: string } }
 export interface FunctionAnnotation {
   <T>(target: Prototype, propertyKey: PropertyKey, descriptor: TypedPropertyDescriptor<T>): void
 }
@@ -34,8 +34,8 @@ export declare interface WebMvcConfigurer {
   addInterceptors(registry: registryType): void
 }
 
-type registryType = {
-  addInterceptor(fn: WebMvcConfigurer): Function
+export type registryType = {
+  addInterceptor<T extends HandlerInterceptor>(interceptor: T): Function
   addPathPatterns(path: string): Function
 }
 

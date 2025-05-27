@@ -14,7 +14,6 @@
 </p>
 
 
-
 ---
 
 
@@ -72,6 +71,18 @@ server:
 
 
 
-## 疑问交流
+## 控制器
 
-QQ群: <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=HlKQBtl0Z6aZIrJ7LdY2XEH7-whn5Cn9&jump_from=webapi&authKey=Nyq0s9BesdTQYHlMMz854uAYhjR3VvL2QEOUUF/51rzIETlh/43E5Yr8Eg53tWE4">xiao-koa(917968816)</a>
+- @Mapping()
+- @Service()
+- @Controller('/xxx')
+
+上面三个控制器都会将模块注入到系统里
+
+
+
+## 配置
+
+@Configuration
+
+代表是一个配置文件
