@@ -26,7 +26,6 @@ await $`git add .`
 
 await $`git commit -m "版本号: ${_data.version}"`
 
-await $`git push gitee master`
 
 try {
   await $`git push github master`
