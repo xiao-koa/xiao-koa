@@ -26,6 +26,7 @@ function createRequestControllerDecorator(method: RequestMethod) {
   return function (url?: string): FunctionAnnotation {
     return function (target, propertyKey) {
       process.nextTick(() => {
+        url = (url === undefined || url === '') ? String(propertyKey) : url
         url = url === '/' ? '' : url ?? ''
         let prefix = Reflect.getMetadata(Features.BaseUrl, ControllerMap.get(target.constructor.name) ?? {})
         router[method](prefix + url, (ctx) => ControllerProxy(ctx, target, propertyKey))

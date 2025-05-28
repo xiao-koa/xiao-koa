@@ -81,6 +81,17 @@ export const Delete = createRequestControllerDecorator('delete')
 export const Options = createRequestControllerDecorator('options')
 export const Patch = createRequestControllerDecorator('patch')
 export const Head = createRequestControllerDecorator('head')
+
+如果属性值为空，则自动根据函数名进行生成路径
+@Get() //不写或者为''都自动匹配
+async getMessages() {
+    // 这个路径就为/getMessages
+ }
+
+@Get('/')
+async getMessages() {
+    // 这个路径就为匹配Controller父路径
+ }
 ```
 
 ```ts
