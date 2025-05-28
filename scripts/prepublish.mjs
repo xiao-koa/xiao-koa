@@ -22,13 +22,13 @@ console.log(`版本号： ${version} -> ${_data.version}`)
 // await $`git tag -m "v${_data.version}" v${_data.version}`
 // await $`git push --follow-tags`
 
-await $`git add .`
+// await $`git add .`
 
-await $`git commit -m "版本号: ${_data.version}"`
+// await $`git commit -m "版本号: ${_data.version}"`
 
 
-try {
-  await $`git push github master`
-} catch (error) {}
+// try {
+//   await $`git push github master`
+// } catch (error) {}
 
 console.log(`版本号： ${version} -> ${_data.version}`)
