@@ -26,4 +26,5 @@ export declare const Patch: (url?: string) => FunctionAnnotation;
 export declare const Head: (url?: string) => FunctionAnnotation;
 export declare const PathVariable: (params: string) => ParameterAnnotation;
 export declare const RequestHeader: (params: string) => ParameterAnnotation;
+export declare const GetCtx: (params: string) => ParameterAnnotation;
 export declare const load: (folder: string) => any;

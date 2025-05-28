@@ -26,7 +26,7 @@ export declare enum Features {
     BaseUrl = 0,
     DataParams = 1
 }
-export type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody';
+export type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody' | 'GetCtx';
 export interface HandlerInterceptor {
     preHandle(ctx: ParameterizedContext, next: Next): any;
 }

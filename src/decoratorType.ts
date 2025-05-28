@@ -25,7 +25,7 @@ export enum Features {
   DataParams,
 }
 
-export type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody'
+export type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody' | 'GetCtx'
 
 export interface HandlerInterceptor {
   preHandle(ctx: ParameterizedContext, next: Next): any

@@ -47,6 +47,22 @@ npm i xiao-koa
 
 
 
+## 更新时间
+
+2025/5/28：
+
+新增 app.getRouters()
+
+新增 run()的时候自动获得路径
+
+新增@GetCtx,可以获得原生ctx
+
+新增请求装饰器不写参数自动按方法名匹配地址
+
+新增app.setResources(path.join(__dirname, 'resources'))
+
+
+
 `index.ts`案例
 
 ~~~ts
@@ -113,6 +129,10 @@ requestBody(@RequestBody user: any) {
   return { msg: '演示RequestBody', user }
 }
 
+async sendMessage(@GetCtx('') ctx: any) {
+    console.log(ctx.request.files);
+}
+
 ```
 
 ```ts
@@ -176,9 +196,19 @@ export default class DemoApplication {
   }
 }
 
-run(dir: string, prot?: number): Server
-use(fn: Middleware)
-mount(fn: Function)
-setGlobalPrefix(prefix: string)
+export declare class xiaoKoaApp {
+    globalPrefix: string;
+    dir: string;
+    JsonStr: any;
+    private routers;
+    constructor(callerPath: string);
+    run(prot?: number): Server;
+    getRouters(): Promise<unknown>;
+    use(fn: Middleware): void;
+    mount(fn: Function): void;
+    setGlobalPrefix(prefix: string): void;
+    setResources(path: string, opts?: serve.Options): void;
+}
+
 ```
 

@@ -3,10 +3,12 @@ import 'reflect-metadata'
 import Koa, { Middleware } from 'koa'
 import bodyparser from 'koa-bodyparser'
 import KoaRouter from 'koa-router'
+import koaStatic from 'koa-static'
 import YAML from 'yamljs'
 
 import fs from 'fs'
 import { Server } from 'http'
+import serve from 'koa-static'
 import path from 'path'
 import { getCallerPath } from './common'
 import { load, ServiceMap } from './decorator'
@@ -40,6 +42,7 @@ export class xiaoKoaApp {
   globalPrefix = ''
   dir: string
   JsonStr: any = {}
+  private routers: KoaRouter.Layer[] = []
 
   constructor(callerPath: string) {
     this.dir = path.dirname(callerPath)
@@ -52,15 +55,26 @@ export class xiaoKoaApp {
   }
 
   run(prot?: number): Server {
+    // 路由必须要写在这里,否则外部中间件不起作用
     router = load(this.dir)
     app.use(router.routes())
     app.use(routers.routes())
+
+    process.nextTick(() => {
+      this.routers.push(...router.stack, ...routers.stack)
+    })
 
     const appServer = app.listen(prot ?? this.JsonStr?.server?.port ?? 7777, () => {
       console.log(`请访问 http://localhost:${prot ?? this.JsonStr?.server?.port}`)
     })
 
     return appServer
+  }
+
+  getRouters() {
+    return new Promise(resolve => {
+      process.nextTick(() => resolve(this.routers))
+    })
   }
 
   use(fn: Middleware) {
@@ -86,5 +100,9 @@ export class xiaoKoaApp {
         router.prefix(prefix)
       })
     }
+  }
+
+  setResources(path: string, opts?: serve.Options) {
+    app.use(koaStatic(path, opts))
   }
 }

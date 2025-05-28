@@ -26,14 +26,16 @@ function createRequestControllerDecorator(method: RequestMethod) {
   return function (url?: string): FunctionAnnotation {
     return function (target, propertyKey) {
       process.nextTick(() => {
-        url = (url === undefined || url === '') ? String(propertyKey) : url
+        url = (url === undefined || url === '') ? `/${String(propertyKey)}` : url
         url = url === '/' ? '' : url ?? ''
+
         let prefix = Reflect.getMetadata(Features.BaseUrl, ControllerMap.get(target.constructor.name) ?? {})
         router[method](prefix + url, (ctx) => ControllerProxy(ctx, target, propertyKey))
       })
     }
   }
 }
+
 
 function createRequestParamsDecorator(paramsType: paramsType) {
   return function (params: string): ParameterAnnotation {
@@ -72,6 +74,8 @@ async function ControllerProxy(ctx: ParameterizedContext, target: Prototype, pro
         dataArr.push(ctx.request.body)
       } else if (params.paramsType == 'RequestHeader') {
         dataArr.push(ctx.request.header[params.name])
+      } else if (params.paramsType == 'GetCtx') {
+        dataArr.push(ctx)
       }
     })
   } catch (error: any) {
@@ -213,6 +217,7 @@ export const Head = createRequestControllerDecorator('head')
 
 export const PathVariable = createRequestParamsDecorator('PathVariable')
 export const RequestHeader = createRequestParamsDecorator('RequestHeader')
+export const GetCtx = createRequestParamsDecorator('GetCtx')
 
 export const load = (folder: string): any => {
   getFileList(folder, projectFile)
