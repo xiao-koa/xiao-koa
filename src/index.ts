@@ -8,6 +8,7 @@ import YAML from 'yamljs'
 import fs from 'fs'
 import { Server } from 'http'
 import path from 'path'
+import { getCallerPath } from './common'
 import { load, ServiceMap } from './decorator'
 export * from './decorator'
 
@@ -22,6 +23,8 @@ routers.get('/', (ctx) => {
 
 app.use(bodyparser())
 
+
+
 export function Application(target: any) {
   const app = new target()
 
@@ -30,22 +33,26 @@ export function Application(target: any) {
     process.exit(1)
   }
 
-  app.main(new xiaoKoaApp())
+  app.main(new xiaoKoaApp(getCallerPath()))
 }
 
 export class xiaoKoaApp {
   globalPrefix = ''
-  dir: string | null = null
+  dir: string
   JsonStr: any = {}
 
-  run(dir: string, prot?: number): Server {
-    if (fs.existsSync(path.join(dir, 'application.yml'))) {
-      const nativeObject = YAML.load(path.join(dir, 'application.yml'))
+  constructor(callerPath: string) {
+    this.dir = path.dirname(callerPath)
+
+    if (fs.existsSync(path.join(this.dir, 'application.yml'))) {
+      const nativeObject = YAML.load(path.join(this.dir, 'application.yml'))
+
       this.JsonStr = JSON.parse(JSON.stringify(nativeObject))
     }
+  }
 
-    this.dir = dir
-    router = load(dir)
+  run(prot?: number): Server {
+    router = load(this.dir)
     app.use(router.routes())
     app.use(routers.routes())
 

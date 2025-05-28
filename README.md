@@ -55,7 +55,7 @@ import { Application, xiaoKoaApp } from "xiao-koa";
 @Application
 export default class TestApplication {
   main(app: xiaoKoaApp) {
-    app.run(__dirname, 1234);
+    app.run(1234);
   }
 }
 ~~~
@@ -161,7 +161,7 @@ export default class DemoApplication {
 
     app.use(serve(path.join(__dirname,'./img')))
 
-    app.run(__dirname)
+    app.run()
   }
 }
 
