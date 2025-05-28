@@ -127,7 +127,7 @@ export function RequestMapping(url?: string): FunctionAnnotation {
   }
 }
 
-class InterceptorRegistry {
+export class InterceptorRegistry {
   interceptorMap = new Map()
   currentFnName = ''
   addInterceptor(fn: HandlerInterceptor) {

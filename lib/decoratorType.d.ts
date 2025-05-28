@@ -1,4 +1,5 @@
 import { DefaultContext, DefaultState, Next, ParameterizedContext } from 'koa';
+import { InterceptorRegistry } from './decorator';
 export { DefaultContext, DefaultState, Next, ParameterizedContext };
 export type Prototype = {
     constructor: Function;
@@ -32,10 +33,7 @@ export interface HandlerInterceptor {
 export declare interface WebMvcConfigurer {
     addInterceptors(registry: registryType): void;
 }
-export type registryType = {
-    addInterceptor<T extends HandlerInterceptor>(interceptor: T): Function;
-    addPathPatterns(path: string): Function;
-};
+export type registryType = InstanceType<typeof InterceptorRegistry>;
 export type curInterceptorType = {
     fn: HandlerInterceptor;
     addPath: string[];

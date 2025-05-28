@@ -121,7 +121,7 @@ import { Service, HandlerInterceptor, DefaultContext, DefaultState, Next, Parame
 export default class TokenInterceptor implements HandlerInterceptor {
   async preHandle(ctx: ParameterizedContext<DefaultState, DefaultContext, unknown>, next: Next) {
     if (ctx.request.header['token']) {
-      await next()
+      await next()	//等待下一个中间件
     } else {
       throw { code: 403, error: '没有token' }
     }
@@ -143,6 +143,9 @@ export default class WebConfig2 implements WebMvcConfigurer {
   }
 
 }
+
+excludePathPatterns > addPathPatterns > addInterceptor
+
 ```
 
 ```ts
