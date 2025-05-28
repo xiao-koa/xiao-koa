@@ -51,6 +51,12 @@ export function RequestBody(target: any, propertyKey: any, paramsIndex: number) 
   Reflect.defineMetadata(Features.DataParams, [{ name: 'RequestBody', paramsType: 'RequestBody' }, ...dataParamsList], target[propertyKey])
 }
 
+declare module 'koa' {
+  interface Request {
+    [key: string]: any
+  }
+}
+
 async function ControllerProxy(ctx: ParameterizedContext, target: Prototype, propertyKey: PropertyKey) {
   let dataArr: any[] = []
   let isError = false
@@ -76,6 +82,8 @@ async function ControllerProxy(ctx: ParameterizedContext, target: Prototype, pro
         dataArr.push(ctx.request.header[params.name])
       } else if (params.paramsType == 'GetCtx') {
         dataArr.push(ctx)
+      } else if (params.paramsType == 'RequestParam') {
+        dataArr.push(ctx.request[params.name])
       }
     })
   } catch (error: any) {
@@ -162,33 +170,22 @@ export class InterceptorRegistry {
 }
 
 async function InterceptorProxy(ctx: ParameterizedContext, next: Next, curRegistry: curInterceptorType) {
-  if (curRegistry.addPath.length == 0) {
-    if (curRegistry.excludePath.includes(ctx.request.url)) {
-      await next()
-      return
-    }
+  const shouldIntercept = curRegistry.addPath.length === 0
+    ? !curRegistry.excludePath.includes(ctx.request.url)
+    : curRegistry.addPath.includes(ctx.request.url)
 
-    try {
-      const config: any = curRegistry.fn
-      await config?.preHandle?.(ctx, next)
-    } catch (error) {
-      ctx.body = error
-    }
+  if (!shouldIntercept) {
+    await next()
     return
   }
 
-  if (curRegistry.addPath.includes(ctx.request.url)) {
-    try {
-      const config: any = curRegistry.fn
-
-      await config?.preHandle?.(ctx, next)
-    } catch (error) {
-      ctx.body = error
-    }
-    return
+  try {
+    await curRegistry.fn?.preHandle?.(ctx, next)
+    await next()
+    await curRegistry.fn?.postHandle?.(ctx, next)
+  } catch (error) {
+    ctx.body = error
   }
-
-  await next()
 }
 
 export function Configuration(target: any) {
@@ -218,6 +215,7 @@ export const Head = createRequestControllerDecorator('head')
 export const PathVariable = createRequestParamsDecorator('PathVariable')
 export const RequestHeader = createRequestParamsDecorator('RequestHeader')
 export const GetCtx = createRequestParamsDecorator('GetCtx')
+export const RequestParam = createRequestParamsDecorator('RequestParam')
 
 export const load = (folder: string): any => {
   getFileList(folder, projectFile)

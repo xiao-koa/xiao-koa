@@ -54,16 +54,22 @@ export class xiaoKoaApp {
     }
   }
 
-  run(prot?: number): Server {
-    // 路由必须要写在这里,否则外部中间件不起作用
+  initRouter() {
     router = load(this.dir)
     app.use(router.routes())
     app.use(routers.routes())
 
-    process.nextTick(() => {
-      this.routers.push(...router.stack, ...routers.stack)
+    return new Promise(resolve => {
+      process.nextTick(() => {
+        process.nextTick(() => {
+          this.routers.push(...router.stack, ...routers.stack)
+        })
+        resolve(this.routers)
+      })
     })
+  }
 
+  run(prot?: number): Server {
     const appServer = app.listen(prot ?? this.JsonStr?.server?.port ?? 7777, () => {
       console.log(`请访问 http://localhost:${prot ?? this.JsonStr?.server?.port}`)
     })

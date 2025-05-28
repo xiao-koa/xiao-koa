@@ -11,6 +11,7 @@ export declare class xiaoKoaApp {
     JsonStr: any;
     private routers;
     constructor(callerPath: string);
+    initRouter(): Promise<unknown>;
     run(prot?: number): Server;
     getRouters(): Promise<unknown>;
     use(fn: Middleware): void;

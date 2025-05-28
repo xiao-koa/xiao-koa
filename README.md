@@ -49,6 +49,18 @@ npm i xiao-koa
 
 ## 更新时间
 
+2025/5/29：
+
+修改拦截器的方式，不需要手动next()
+
+新增响应拦截器
+
+新增RequestParam,可以获得ctx.request里的参数，一般配合files使用
+将run里的路由分离出来initRouter()，好做前置后置拦截。
+​
+
+
+
 2025/5/28：
 
 新增 app.getRouters()
@@ -60,6 +72,8 @@ npm i xiao-koa
 新增请求装饰器不写参数自动按方法名匹配地址
 
 新增app.setResources(path.join(__dirname, 'resources'))
+
+​
 
 
 
@@ -129,6 +143,12 @@ requestBody(@RequestBody user: any) {
   return { msg: '演示RequestBody', user }
 }
 
+@Post('/post')
+post(@RequestParam('files') file: string) {
+  console.log(321);
+  return { msg: '这是Post请求' }
+}
+
 async sendMessage(@GetCtx('') ctx: any) {
     console.log(ctx.request.files);
 }
@@ -165,7 +185,8 @@ import TokenInterceptor from './TokenInterceptor'
 
 @Configuration
 export default class WebConfig2 implements WebMvcConfigurer {
-  @Autowired
+  // 参数名必须是以方法TokenInterceptor开头小写进行命名，要不就是server('xx')起别名
+    @Autowired
   declare tokenInterceptor: TokenInterceptor
 
 

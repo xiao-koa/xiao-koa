@@ -26,9 +26,10 @@ export declare enum Features {
     BaseUrl = 0,
     DataParams = 1
 }
-export type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody' | 'GetCtx';
+export type paramsType = 'PathVariable' | 'RequestHeader' | 'RequestBody' | 'GetCtx' | 'RequestParam';
 export interface HandlerInterceptor {
-    preHandle(ctx: ParameterizedContext, next: Next): any;
+    preHandle?(ctx: ParameterizedContext, next: Next): any;
+    postHandle?(ctx: ParameterizedContext, res: any): any;
 }
 export declare interface WebMvcConfigurer {
     addInterceptors(registry: registryType): void;
