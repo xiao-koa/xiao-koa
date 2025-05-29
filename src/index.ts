@@ -4,6 +4,7 @@ import Koa, { Middleware } from 'koa'
 import bodyparser from 'koa-bodyparser'
 import KoaRouter from 'koa-router'
 import koaStatic from 'koa-static'
+import koa2Cors from 'koa2-cors'
 import YAML from 'yamljs'
 
 import fs from 'fs'
@@ -110,5 +111,9 @@ export class xiaoKoaApp {
 
   setResources(path: string, opts?: serve.Options) {
     app.use(koaStatic(path, opts))
+  }
+
+  setCors(options?: koa2Cors.Options) {
+    app.use(koa2Cors(options))
   }
 }

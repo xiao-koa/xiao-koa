@@ -57,6 +57,7 @@ npm i xiao-koa
 
 新增RequestParam,可以获得ctx.request里的参数，一般配合files使用
 将run里的路由分离出来initRouter()，好做前置后置拦截。
+新增setCORS跨域功能,使用的koa2-cors
 ​
 
 
